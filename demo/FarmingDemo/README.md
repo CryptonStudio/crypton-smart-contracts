@@ -1,24 +1,24 @@
 # Boost Farming
 
-## ℹ️ Table of Contents
+## Table of Contents
 
 - [Boost Farming](#boost-farming)
-  - [ℹ️ Table of Contents](#ℹ️-table-of-contents)
-  - [👋🏻 Introduction](#-introduction)
-  - [🚨 Environment variables](#-environment-variables)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Environment variables](#environment-variables)
     - [Contracts `.env` file](#contracts-env-file)
-  - [👾 Contracts](#-contracts)
-    - [📦 Dependencies installation](#-dependencies-installation)
-    - [🧪 Running the Contracts tests](#-running-the-contracts-tests)
-    - [🚀 Compiling the contracts](#-compiling-the-contracts)
-    - [⚡️ Deploying the contracts on testnet](#️-deploying-the-contracts-on-testnet)
-    - [❓ How tests work](#-how-tests-work)
+  - [Contracts](#contracts)
+    - [Dependencies installation](#dependencies-installation)
+    - [Running the Contracts tests](#running-the-contracts-tests)
+    - [Compiling the contracts](#compiling-the-contracts)
+    - [Deploying the contracts on testnet](#deploying-the-contracts-on-testnet)
+    - [How tests work](#how-tests-work)
 
-## 👋🏻 Introduction
+## Introduction
 
 Boost Farming - platform where you can stake your tokens and boost rewards with NFT.
 
-## 🚨 Environment variables
+## Environment variables
 
 The project uses environment variables to configure the different packages. You must create the needed `.env` file in the root folder. **This step is mandatory and cannot be skipped, otherwise the app won't compile, run or work properly.**
 
@@ -32,11 +32,11 @@ SEPOLIA_URL=<https://sepolia.infura.io/v3/YOUR_KEY> # The url of the node to use
 ETHERSCAN_API_KEY=<ETHERSCAN_API_KEY> # API Key used to verify the contracts.
 ```
 
-## 👾 Contracts
+## Contracts
 
 The smart contracts are written in [Solidity](https://solidity.readthedocs.io/en/v0.5.3/) and are compiled/tested using [Hardhat](https://hardhat.org/).
 
-### 📦 Dependencies installation
+### Dependencies installation
 
 To install the contracts dependencies, you need to have [Node.js](https://nodejs.org/en/) installed. Then, you can run the following commands:
 
@@ -44,13 +44,13 @@ To install the contracts dependencies, you need to have [Node.js](https://nodejs
 npm i -d
 ```
 
-### 🧪 Running the Contracts tests
+### Running the Contracts tests
 
 Running the contracts tests requires a valid private key set in the .env inside packages/contracts and can be as simple as
 following example(example key does not exist):
 
 ```bash
-MNEMONIC="80f2f0cf3f1932ff6c50760e18cfd6a22bd974b16963975f270f98a7807e2756"
+PRIVATE="80f2f0cf3f1932ff6c50760e18cfd6a22bd974b16963975f270f98a7807e2756"
 ```
 
 To run the tests, you can run the following command:
@@ -68,7 +68,7 @@ npm run test:token # Test NFT
 npm run test:farming # Test only farming
 ```
 
-### 🚀 Compiling the contracts
+### Compiling the contracts
 
 To compile the contracts, you can run the following command:
 
@@ -76,7 +76,7 @@ To compile the contracts, you can run the following command:
 npm run compile
 ```
 
-### ⚡️ Deploying the contracts on testnet
+### Deploying the contracts on testnet
 
 In order to deploy the contracts on a testnet, you can use the `deploy` script. We'll use
 Sepolia testnet as the default in this readme and the repository.
@@ -104,7 +104,8 @@ keys.
 
 For deploy Farming ontract you must deploy all tokens first and set addresses in .env-sepolia.
 
-Tags for deploy: 
+Tags for deploy:
+
 1. BoosToken - `Boost`
 2. RewardToken - `Reward`
 3. StakeToken - `Stake`
@@ -112,6 +113,6 @@ Tags for deploy:
 
 Deploy to mainnet is similar to testnet. Just use `mainnet` instead of `sepolia` and create `.env-mainnet` file
 
-### ❓ How tests work
+### How tests work
 
 The tests for the contracts are written using the [Hardhat](https://hardhat.org/) framework. They are located in the `test`
