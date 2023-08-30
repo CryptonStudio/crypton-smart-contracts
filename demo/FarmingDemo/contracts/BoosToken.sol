@@ -116,7 +116,8 @@ contract BoosToken is ERC721, AccessControl, IBoosToken, VRFConsumerBaseV2, Conf
     function getRarity(uint256 tokenId) external view override returns (Rarity) {
         return _tokenRarityMap[tokenId];
     }
-
+    
+    /// @notice See {IERC165-supportsInterface}.
     function supportsInterface(bytes4 interfaceId)
         public
         view
@@ -126,17 +127,23 @@ contract BoosToken is ERC721, AccessControl, IBoosToken, VRFConsumerBaseV2, Conf
         return super.supportsInterface(interfaceId);
     }
 
+    /// @notice Used by VRFCoordinator, execute mint request
+    /// @param requestId id of mint request
+    /// @param randomWords array of random words
     function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal override {
         if (!requests[requestId].exists) revert WrongRequestId();
         _tokenIds.increment();
         uint256 randomNumber = randomWords[0] % 100; // Number should be in range 0-99
-        Rarity rarity = _gambleRariry(randomNumber);
+        Rarity rarity = _gambleRarity(randomNumber);
         _tokenRarityMap[_tokenIds.current()] = rarity;
         requests[requestId].fulfilled = true;
         _safeMint(requests[requestId].recipient, _tokenIds.current());
         emit RequestFulfilled(requestId, randomWords);
     }
 
+    /// @notice Request to VRFCoordinator for random words
+    /// @param to address of NFT recipient
+    /// @return requestId id of request
     function _requestRandomWords(address to) internal returns (uint256 requestId) {
         // Will revert if subscription is not set and funded.
         requestId = _coordinator.requestRandomWords(
@@ -167,7 +174,10 @@ contract BoosToken is ERC721, AccessControl, IBoosToken, VRFConsumerBaseV2, Conf
         super._beforeTokenTransfer(from, to, tokenId, batchSize);
     }
 
-    function _gambleRariry(uint256 randomNumber) internal view returns (Rarity rarity) {
+    /// @notice Returns rarity of NFT by given number
+    /// @param randomNumber number in range 0-99
+    /// @param rarity resulting rarity
+    function _gambleRarity(uint256 randomNumber) internal view returns (Rarity rarity) {
         for (uint256 i = 0; i < chanceArray.length; i++) {
             if (randomNumber <= chanceArray[i]) return Rarity(i + 1);
         }

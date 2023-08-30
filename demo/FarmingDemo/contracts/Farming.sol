@@ -164,7 +164,7 @@ contract Farming is IFarming {
     function claimRewards() external override {
         User memory user = users[msg.sender];
         uint256 rewardMultiplier = boostMultiplier[boostingToken.getRarity(user.tokenId)];
-        uint256 amount = calculateClaimableAmount(
+        uint256 claimable = calculateClaimableAmount(
             rewardMultiplier,
             user.depositTime,
             block.timestamp,
@@ -172,7 +172,7 @@ contract Farming is IFarming {
             user.unclaimed
         );
         users[msg.sender].depositTime = block.timestamp;
-        _claimRewards(amount);
+        _claimRewards(claimable);
     }
 
     /// @inheritdoc IFarming
@@ -194,6 +194,8 @@ contract Farming is IFarming {
             HUNDRED_PERCENT;
     }
 
+    /// @notice Transfer reward tokens
+    /// @param amount amount to transfer
     function _claimRewards(uint256 amount) internal {
         if (amount == 0) revert NothingToClaim();
         if (rewardToken.balanceOf(address(this)) < amount) revert InsufficientBalance();
