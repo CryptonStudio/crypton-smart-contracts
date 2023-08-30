@@ -16,8 +16,7 @@
     "test:token": "npm run format:t && hardhat test ./test/BoosToken.ts",
     "test:farming": "npm run format:t && hardhat test ./test/Farming.ts",
     "coverage": "env COVERAGE=true hardhat coverage",
-    "size": "npm run compile && hardhat size-contracts",
-    "prepare": "husky install"
+    "size": "npm run compile && hardhat size-contracts"
   },
   "devDependencies": {
     "@chainlink/contracts": "^0.6.1",
