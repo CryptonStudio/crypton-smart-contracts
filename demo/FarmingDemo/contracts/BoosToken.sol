@@ -11,7 +11,7 @@ import {IBoosToken} from "./interfaces/IBoosToken.sol";
 
 contract BoosToken is ERC721, AccessControl, IBoosToken, VRFConsumerBaseV2, ConfirmedOwner {
     using Counters for Counters.Counter;
-
+    
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     bytes32 public constant STAKING_ROLE = keccak256("STAKING_ROLE");
 
@@ -58,6 +58,11 @@ contract BoosToken is ERC721, AccessControl, IBoosToken, VRFConsumerBaseV2, Conf
         _;
     }
 
+    /// @notice Constructor inhetits from ERC721, VRFConsumerBaseV2 and ConfirmedOwner
+    /// @param coordinatorVRF coordinator address on the current network
+    /// @param subscriptionId subscription id on chainlink
+    /// @param key keyhash for gasprice
+    /// @param chances array of chances for rarity
     constructor(
         address coordinatorVRF,
         uint64 subscriptionId,
